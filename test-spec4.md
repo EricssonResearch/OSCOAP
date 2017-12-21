@@ -62,6 +62,8 @@ When non-indicated, CoAP messages can be NON or CON (implementer's choice).
 
 To be able to run Test 14, the implementer must run an OSCORE-unaware server.
 
+The number used as Object-Security option number is set to 21 in this document.
+
 ## 2. Security Contexts and Resources
 
 ### Security Context A: Client {#client-sec}
