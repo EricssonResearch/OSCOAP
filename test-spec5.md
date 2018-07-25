@@ -100,6 +100,40 @@ The number used as Object-Security option number is set to 9 in this document.
     - Recipient Key: 0xf0910ed7295e6ad4b54fc793154302ff (16 bytes)
     - Recipient IV: 0x4622d4dd6d944168eefb54987c (using Partial IV: 00)
 
+### Security Context C: Client {#client-secC}
+
+* Common Context:
+    - Master Secret: 0x0102030405060708090a0b0c0d0e0f10 (16 bytes)
+    - Master Salt: 0x9e7ca92223786340 (8 bytes)
+    - Common IV: 0x4622d4dd6d944168eefb54987c (13 bytes)
+    - ID Context: 0x37cbf3210017a2d3 (8 bytes)
+* Sender Context:
+    - Sender ID: 0x (0 byte)
+    - Sender Key: 0xaf2a1300a5e95788b356336eeecd2b92 (16 bytes)
+    - Sender Seq Number: 00
+    - Sender IV: 0x2ca58fb85ff1b81c0b7181b85e (using Partial IV: 00)
+* Recipient Context:
+    - Recipient ID: 0x01 (1 byte)
+    - Recipient Key: 0xe39a0c7c77b43f03b4b39ab9a268699f (16 bytes)
+    - Recipient IV: 0x2da58fb85ff1b81d0b7181b85e (using Partial IV: 00)
+
+### Security Context D: Server {#server-secD}
+
+* Common Context:
+    - Master Secret: 0x0102030405060708090a0b0c0d0e0f10 (16 bytes)
+    - Master Salt: 0x9e7ca92223786340 (8 bytes)
+    - Common IV: 0x2ca58fb85ff1b81c0b7181b85e (13 bytes)
+    - ID Context: 0x37cbf3210017a2d3 (8 bytes)
+* Sender Context:
+    - Sender Id: 0x01 (1 byte)
+    - Sender Key: 0x8541014837cbf3210017a2d30a634b657910 (16 bytes)
+    - Sender Seq Number: 00
+    - Sender IV: 0x2da58fb85ff1b81d0b7181b85e (using Partial IV: 00)
+* Recipient Context:
+    - Recipient Id: 0x (0 byte)
+    - Recipient Key: 0xaf2a1300a5e95788b356336eeecd2b92 (16 bytes)
+    - Recipient IV: 0x2ca58fb85ff1b81c0b7181b85e (using Partial IV: 00)
+
 ### Resources
 
 The list of resources the OSCORE-aware server must implement is the following:
@@ -268,6 +302,110 @@ _server resources_:
 |      |          | 0.02 POST with:                                          |
 |      |          |                                                          |
 |      |          | - Object-Security option                                 |
+|      |          | - Payload                                                |
++------+----------+----------------------------------------------------------+
+| 4    | Verify   | Server decrypts the message: OSCORE verification succeeds|
++------+----------+----------------------------------------------------------+
+| 5    | Check    | Server parses the request and continues the CoAP         |
+|      |          | processing; expected: CoAP GET request, including:       |
+|      |          |                                                          |
+|      |          | - Uri-Path : /oscore/hello/1                             |
++------+----------+----------------------------------------------------------+
+| 6    | Verify   | Server displays the received packet                      |
++------+----------+----------------------------------------------------------+
+| 7    | Check    | Server serialize the response correctly, which is:       |
+|      |          | 2.04 Changed Response with:                              |
+|      |          |                                                          |
+|      |          | - Object-Security option                                 |
+|      |          | - Payload: ciphertext including:                         |
+|      |          |     * Code: 2.05 Content Response                        |
+|      |          |     * Content-Format = 0 (text/plain)                    |
+|      |          |     * Payload = "Hello World!"                           |
++------+----------+----------------------------------------------------------+
+| 8    | Verify   | Server displays the sent packet                          |
++------+----------+----------------------------------------------------------+
+
+#### 4.1.1. Identifier: TEST_1a {#test-1a}
+
+**Objective** : Perform a simple GET transaction using OSCORE, Content-Format and Uri-Path option (Client side), sending an ID Context in the Object Security option
+
+**Configuration** :
+
+_client security context_: [Security Context C](#client-secC), with:
+
+* Sequence number received not in client's replay window
+* Context ID sent in the message
+
+**Test Sequence**
+
++------+----------+----------------------------------------------------------+
+| Step | Type     | Description                                              |
++======+==========+==========================================================+
+| 1    | Stimulus | The client is requested to send a CoAP GET request       |
+|      |          | protected with OSCORE, including:                        |
+|      |          |                                                          |
+|      |          | - Object-Security option                                 |
+|      |          | - Uri-Path : /oscore/hello/1                             |
++------+----------+----------------------------------------------------------+
+| 2    | Check    | Client serializes the request, which is a POST request,  |
+|      |          | with:                                                    |
+|      |          |                                                          |
+|      |          | - Object-Security option (with ID Context)               |
+|      |          | - Payload: ciphertext including:                         |
+|      |          |       * Code: GET                                        |
+|      |          |       * Uri-Path : /oscore/hello/1                       |
++------+----------+----------------------------------------------------------+
+| 3    | Verify   | Client displays the sent packet                          |
++------+----------+----------------------------------------------------------+
+| 4    | Check    | Client parses the response; expected:                    |
+|      |          | 2.04 Changed Response with:                              |
+|      |          |                                                          |
+|      |          | - Object-Security option                                 |
+|      |          | - Payload                                                |
++------+----------+----------------------------------------------------------+
+| 5    | Verify   | Client decrypts the message: OSCORE verification succeeds|
++------+----------+----------------------------------------------------------+
+| 6    | Check    | Client parses the decrypted response and continues the   |
+|      |          | CoAP processing; expected 2.05 Content Response with:    |
+|      |          |                                                          |
+|      |          | - Content-Format = 0 (text/plain)                        |
+|      |          | - Payload = "Hello World!"                               |
++------+----------+----------------------------------------------------------+
+| 7    | Verify   | Client displays the received packet                      |
++------+----------+----------------------------------------------------------+
+
+#### 4.1.2. Identifier: TEST_1b {#test-1b}
+
+**Objective** : Perform a simple GET transaction using OSCORE, Content-Format and Uri-Path option (Server side), receiving an ID Context in the Object Security option
+
+**Configuration** :
+
+_server security context_: 
+[Security Context D](#server-secD), with:
+
+* Sequence number received not in server's replay window
+
+_server resources_:
+
+* /oscore/hello/1 : protected resource, authorized method: GET, returns the string "Hello World!" with content-format 0 (text/plain)
+
+**Test Sequence**
+
++------+----------+----------------------------------------------------------+
+| Step | Type     | Description                                              |
++======+==========+==========================================================+
+| 1    | Stimulus | The client is requested to send a CoAP GET request       |
+|      |          | protected with OSCORE, including:                        |
+|      |          |                                                          |
+|      |          | - Object-Security option                                 |
+|      |          | - Uri-Path = /oscore/hello/1                             |
++------+----------+----------------------------------------------------------+
+| 2    | Verify   | Server displays the received packet                      |
++------+----------+----------------------------------------------------------+
+| 3    | Check    | Server parses the request; expected:                     |
+|      |          | 0.02 POST with:                                          |
+|      |          |                                                          |
+|      |          | - Object-Security option (Containing ID Context)         |
 |      |          | - Payload                                                |
 +------+----------+----------------------------------------------------------+
 | 4    | Verify   | Server decrypts the message: OSCORE verification succeeds|
