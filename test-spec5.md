@@ -1398,7 +1398,7 @@ _server security context_: [Security Context B](#server-sec), with:
 
 _server resources_:
 
-* /test: protected resource, authorized method: DEL.
+* oscore/test: protected resource, authorized method: DEL.
 
 **Test Sequence**
 
@@ -1464,7 +1464,7 @@ _client security context_: [Security Context A](#client-sec), with:
 |      |          | - Object-Security option (modified Sender ID)            |
 |      |          | - Uri-Path : /oscore/hello/1                             |
 +------+----------+----------------------------------------------------------+
-| 2    | Check    | Client serializes the request, which is a GET request,   |
+| 2    | Check    | Client serializes the request, which is a POST request,  |
 |      |          | with:                                                    |
 |      |          |                                                          |
 |      |          | - Object-Security option                                 |
@@ -1475,19 +1475,11 @@ _client security context_: [Security Context A](#client-sec), with:
 | 3    | Verify   | Client displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 | 4    | Check    | Client parses the response; expected:                    |
-|      |          | 2.04 Changed Response with:                              |
-|      |          |                                                          |
-|      |          | - Object-Security option                                 |
-|      |          | - Payload                                                |
-+------+----------+----------------------------------------------------------+
-| 5    | Verify   | Client decrypts the message: OSCORE verification succeeds|
-+------+----------+----------------------------------------------------------+
-| 6    | Check    | Client parses the decrypted response and continues the   |
-|      |          | CoAP processing; expected 4.01 Unauthorized, with:       |
+|      |          | 4.01 Unauthorized, with:                                 |
 |      |          |                                                          |
 |      |          | - Payload: Security context not found (optional)         |
 +------+----------+----------------------------------------------------------+
-| 7    | Verify   | Client displays the received packet                      |
+| 5    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
 #### 5.1.2. Identifier: TEST_10b {#test-10b}
@@ -1564,15 +1556,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 3    | Verify   | Client displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 | 4    | Check    | Client parses the response; expected:                    |
-|      |          | 2.04 Changed Response with:                              |
-|      |          |                                                          |
-|      |          | - Object-Security option                                 |
-|      |          | - Payload                                                |
-+------+----------+----------------------------------------------------------+
-| 5    | Verify   | Client decrypts the message: OSCORE verification succeeds|
-+------+----------+----------------------------------------------------------+
-| 6    | Check    | Client parses the decrypted response and continues the   |
-|      |          | CoAP processing; expected 4.00 Bad Request error message:|
+|      |          | 4.00 Bad Request error message:                          |
 |      |          |                                                          |
 |      |          | - Payload: Decryption failed (optional)                  |
 +------+----------+----------------------------------------------------------+
@@ -1783,17 +1767,9 @@ _client security context_: [Security Context A](#client-sec)
 | 11   | Verify   | Client displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 | 12   | Check    | Client parses the response; expected:                    |
-|      |          | 2.04 Changed Response with:                              |
+|      |          | 4.00 Bad Request, with:                                  |
 |      |          |                                                          |
-|      |          | - Object-Security option                                 |
-|      |          | - Payload                                                |
-+------+----------+----------------------------------------------------------+
-| 13   | Verify   | Client decrypts the message: OSCORE verification succeeds|
-+------+----------+----------------------------------------------------------+
-| 14   | Check    | Client parses the decrypted response and continues the   |
-|      |          | CoAP processing; expected 4.00 Bad Request, with:        |
-|      |          |                                                          |
-|      |          | - Payload: Replay protection failed (optional)           |
+|      |          | - Payload: Replay detected                               |
 +------+----------+----------------------------------------------------------+
 | 15   | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
