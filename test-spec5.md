@@ -7,6 +7,8 @@
 2. [Security Contexts and Resources](#security-contexts-and-resources)
     1. [Security Context A: Client](#client-sec)
     2. [Security Context B: Server](#server-sec)
+    3. [Security Context C: Client](#client-secC)
+    4. [Security Context D: Server](#server-secD)
     3. [Resources](#resources)
 3. [Set up the environment](#env-setup)
     1. [Test 0a](#test-0a)
@@ -25,34 +27,36 @@
         10. [Test 5b](#test-5b)
         11. [Test 6a](#test-6a)
         12. [Test 6b](#test-6b)
+        13. [Test 7a](#test-7a)
+        14. [Test 7b](#test-7b)
     2. [POST test](#post)
-        1. [Test 6a](#test-6a)
-        2. [Test 6b](#test-6b)
+        1. [Test 8a](#test-8a)
+        2. [Test 8b](#test-8b)
     3. [PUT test](#put)       
-        1. [Test 7a](#test-7a)
-        2. [Test 7b](#test-7b)
-        3. [Test 8a](#test-8a)
-        4. [Test 8b](#test-8b)
-    4. [DELETE test](#del)
         1. [Test 9a](#test-9a)
         2. [Test 9b](#test-9b)
+        3. [Test 10a](#test-10a)
+        4. [Test 10b](#test-10b)
+    4. [DELETE test](#del)
+        1. [Test 11a](#test-11a)
+        2. [Test 11b](#test-11b)
 5. [Incorrect OSCORE use](#incorrect-oscore)
     1. [Security Context not matching](#sec-context)
-        1. [Test 10a](#test-10a)
-        2. [Test 10b](#test-10b)
-        3. [Test 11a](#test-11a)
-        4. [Test 11b](#test-11b)
-        5. [Test 12a](#test-12a)
-        6. [Test 12b](#test-12b)
+        1. [Test 12a](#test-12a)
+        2. [Test 12b](#test-12b)
+        3. [Test 13a](#test-13a)
+        4. [Test 13b](#test-13b)
+        5. [Test 14a](#test-14a)
+        6. [Test 14b](#test-14b)
     2. [Replay of a previously sent message](#replay)
-        1. [Test 13a](#test-13a)
-        2. [Test 13b](#test-13b)
-    3. [Accessing a non-OSCORE-protected resource with OSCORE](#auth)
-        1. [Test 14a](#test-14a)
-        2. [Test 14b](#test-14b)
-    4. [Accessing an OSCORE-protected resource without OSCORE](#unauth)
         1. [Test 15a](#test-15a)
         2. [Test 15b](#test-15b)
+    3. [Accessing a non-OSCORE-protected resource with OSCORE](#auth)
+        1. [Test 16a](#test-16a)
+        2. [Test 16b](#test-16b)
+    4. [Accessing an OSCORE-protected resource without OSCORE](#unauth)
+        1. [Test 17a](#test-17a)
+        2. [Test 17b](#test-17b)
 
 ## 1. Notes
 
@@ -62,7 +66,7 @@ The client and server may optionally display external_aad and COSE object (befor
 
 When non-indicated, CoAP messages can be NON or CON (implementer's choice).
 
-To be able to run Test 14, the implementer must run an OSCORE-unaware server.
+To be able to run Test 16, the implementer must run an OSCORE-unaware server.
 
 The number used as Object-Security option number is set to 9 in this document.
 
@@ -325,7 +329,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.1. Identifier: TEST_1a {#test-1a}
+#### 4.1.3. Identifier: TEST_2a {#test-2a}
 
 **Objective** : Perform a simple GET transaction using OSCORE, Content-Format and Uri-Path option (Client side), sending an ID Context in the Object Security option
 
@@ -334,7 +338,7 @@ _server resources_:
 _client security context_: [Security Context C](#client-secC), with:
 
 * Sequence number received not in client's replay window
-* Context ID sent in the message
+* ID Context sent in the message
 
 **Test Sequence**
 
@@ -374,7 +378,7 @@ _client security context_: [Security Context C](#client-secC), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.2. Identifier: TEST_1b {#test-1b}
+#### 4.1.4. Identifier: TEST_2b {#test-2b}
 
 **Objective** : Perform a simple GET transaction using OSCORE, Content-Format and Uri-Path option (Server side), receiving an ID Context in the Object Security option
 
@@ -429,7 +433,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.3. Identifier: TEST_2a {#test-2a}
+#### 4.1.5. Identifier: TEST_3a {#test-3a}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, Uri-Query and ETag option (Client side)
 
@@ -481,7 +485,7 @@ _client security context_: [Security Context A](#client-sec), with:
 +------+----------+----------------------------------------------------------+
 
 
-#### 4.1.4. Identifier: TEST_2b {#test-2b}
+#### 4.1.6. Identifier: TEST_3b {#test-3b}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, Uri-Query and ETag option (Server side)
 
@@ -538,7 +542,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.5. Identifier: TEST_3a {#test-3a}
+#### 4.1.7. Identifier: TEST_4a {#test-4a}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, Accept and Max-Age option (Client side)
 
@@ -590,7 +594,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.6. Identifier: TEST_3b {#test-3b}
+#### 4.1.8. Identifier: TEST_4b {#test-4b}
 
 **Objective** :Perform a GET transaction using OSCORE, Content-Format, Uri-Path, Accept and Max-Age option (Server side)
 
@@ -648,7 +652,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.7. Identifier: TEST_4a {#test-4a}
+#### 4.1.9. Identifier: TEST_5a {#test-5a}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, and Observe. Response without observe. (Client side)
 
@@ -698,7 +702,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.8. Identifier: TEST_4b {#test-4b}
+#### 4.1.10. Identifier: TEST_5b {#test-5b}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, and Observe. Response without observe.  (Server side)
 
@@ -754,7 +758,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.9. Identifier: TEST_5a {#test-5a}
+#### 4.1.11. Identifier: TEST_6a {#test-6a}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, and Observe (Client side)
 
@@ -842,7 +846,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 15   | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.10. Identifier: TEST_5b {#test-5b}
+#### 4.1.12. Identifier: TEST_6b {#test-6b}
 
 **Objective** : Perform a GET transaction using OSCORE, Content-Format, Uri-Path, and Observe (Server side)
 
@@ -924,7 +928,7 @@ _server resources_:
 | 12   | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.10. Identifier: TEST_6a {#test-6a}
+#### 4.1.13. Identifier: TEST_7a {#test-7a}
 
 **Objective** : Perform 2 GET (Registration and Cancellation) transactions using OSCORE, Content-Format, Uri-Path, and Observe (Client side)
 
@@ -1031,7 +1035,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 18   | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.1.11. Identifier: TEST_6b {#test-6b}
+#### 4.1.14. Identifier: TEST_7b {#test-7b}
 
 **Objective** : Perform 2 GET (Registration and Cancellation) transactions using OSCORE, Content-Format, Uri-Path, and Observe (Client side)
 
@@ -1142,7 +1146,7 @@ _server resources_:
 
 ### 4.2. POST Tests {#post}
 
-#### 4.2.1. Identifier: TEST_6a {#test-6a}
+#### 4.2.1. Identifier: TEST_8a {#test-8a}
 
 **Objective** : Perform a POST transaction using OSCORE, Content-Format, and Uri-Path option, changing a resource (Client side)
 
@@ -1194,7 +1198,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.2.2. Identifier: TEST_6b {#test-6b}
+#### 4.2.2. Identifier: TEST_8b {#test-8b}
 
 **Objective** : Perform a POST transaction using OSCORE, Content-Format, and Uri-Path option, updating a resource (Server side)
 
@@ -1254,7 +1258,7 @@ _server resources_:
 
 ### 4.3 PUT Tests {#PUT}
 
-#### 4.3.1. Identifier: TEST_7a {#test-7a}
+#### 4.3.1. Identifier: TEST_9a {#test-9a}
 
 **Objective** : Perform a PUT transaction using OSCORE, Uri-Path, Content-Format and If-Match option (Client side)
 
@@ -1308,7 +1312,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.3.2. Identifier: TEST_7b {#test-7b}
+#### 4.3.2. Identifier: TEST_9b {#test-9b}
 
 **Objective** : Perform a PUT transaction using OSCORE, Uri-Path, Content-Format and If-Match option (Server side)
 
@@ -1368,7 +1372,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 4.3.3. Identifier: TEST_8a {#test-8a}
+#### 4.3.3. Identifier: TEST_10a {#test-10a}
 
 **Objective** : Perform a PUT transaction using OSCORE, Uri-Path, Content-Format and If-None-Match option (Client side)
 
@@ -1419,7 +1423,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.3.4. Identifier: TEST_8b {#test-8b}
+#### 4.3.4. Identifier: TEST_10b {#test-10b}
 
 **Objective** : Perform a PUT transaction using OSCORE, Uri-Path, Content-Format and If-None-Match option (Server side)
 
@@ -1479,7 +1483,7 @@ _server resources_:
 
 ### 4.4. DELETE Tests {#DEL}
 
-#### 4.4.1. Identifier: TEST_9a {#test-9a}
+#### 4.4.1. Identifier: TEST_11a {#test-11a}
 
 **Objective** : Perform a DELETE transaction using OSCORE and Uri-Path option (Client side)
 
@@ -1524,7 +1528,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 4.4.2. Identifier: TEST_9b {#test-9b}
+#### 4.4.2. Identifier: TEST_11b {#test-11b}
 
 **Objective** : Perform a DELETE transaction using OSCORE and Uri-Path option (Server side)
 
@@ -1580,7 +1584,7 @@ _server resources_:
 
 ### 5.1. Security Context not matching {#sec-context}
 
-#### 5.1.1. Identifier: TEST_10a {#test-10a}
+#### 5.1.1. Identifier: TEST_12a {#test-12a}
 
 **Objective** : Perform an unauthorized CON GET transaction: non matching Client Sender Id - Server Recipient Id (Client side)
 
@@ -1620,7 +1624,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 5    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 5.1.2. Identifier: TEST_10b {#test-10b}
+#### 5.1.2. Identifier: TEST_12b {#test-12b}
 
 **Objective** :Perform an unauthorized GET transaction: non matching Client Sender Id - Server Recipient Id (Server side)
 
@@ -1661,7 +1665,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 5.1.3. Identifier: TEST_11a {#test-11a}
+#### 5.1.3. Identifier: TEST_13a {#test-13a}
 
 **Objective** : Perform a CON GET transaction with non matching Client Sender - Server Recipient Keys (Client side)
 
@@ -1701,7 +1705,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 5.1.4. Identifier: TEST_11b {#test-11b}
+#### 5.1.4. Identifier: TEST_13b {#test-13b}
 
 **Objective** : Perform a CON GET transaction with non matching Client Sender - Server Recipient Keys (Server side)
 
@@ -1742,7 +1746,7 @@ _server resources_:
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 
-#### 5.1.5. Identifier: TEST_12a {#test-12a}
+#### 5.1.5. Identifier: TEST_14a {#test-14a}
 
 **Objective** : Perform a CON GET transaction with non matching Client Recipient - Server Sender Keys (Client side)
 
@@ -1786,7 +1790,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 6    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 5.1.6. Identifier: TEST_12b {#test-12b}
+#### 5.1.6. Identifier: TEST_14b {#test-14b}
 
 **Objective** : Perform a CON GET transaction with non matching Client Recipient - Server Sender Keys (Server side)
 
@@ -1840,7 +1844,7 @@ _server resources_:
 
 ### 5.2. Replay of a previously sent message {#replay}
 
-#### 5.2.1. Identifier: TEST_13a {#test-13a}
+#### 5.2.1. Identifier: TEST_15a {#test-15a}
 
 **Objective** : Perform a CON GET transaction using OSCORE, Content-Format and Uri-Path option, request replayed by the Client (Client side)
 
@@ -1912,7 +1916,7 @@ _client security context_: [Security Context A](#client-sec)
 | 15   | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
 
-#### 5.2.2. Identifier: TEST_13b {#test-13b}
+#### 5.2.2. Identifier: TEST_15b {#test-15b}
 
 **Objective** : Perform a CON GET transaction using OSCORE, Content-Format and Uri-Path option, request replayed by the Client (Client side)
 
@@ -1993,7 +1997,7 @@ _server resources_:
 
 ### 5.3. Accessing a non-OSCORE-protected resource with OSCORE {#auth}
 
-#### 5.3.1. Identifier: TEST_14a {#test-14a}
+#### 5.3.1. Identifier: TEST_16a {#test-16a}
 
 **Objective** : Perform a CON GET transaction using OSCORE to an OSCORE-unaware resource server, Content-Format and Uri-Path option (Client side)
 
@@ -2034,7 +2038,7 @@ _client security context_: [Security Context A](#client-sec)
 +------+----------+----------------------------------------------------------+
 
 
-#### 5.3.2. Identifier: TEST_14b {#test-14b}
+#### 5.3.2. Identifier: TEST_16b {#test-16b}
 
 **Objective** : Perform a CON GET transaction using OSCORE to a non protected resource, Content-Format and Uri-Path option (Server side)
 
@@ -2077,7 +2081,7 @@ _server resources_:
 
 ### 5.4. Accessing an OSCORE-protected resource without OSCORE {#unauth}
 
-#### 5.4.1. Identifier: TEST_15a {#test-15a}
+#### 5.4.1. Identifier: TEST_17a {#test-17a}
 
 **Objective** : Perform a CON GET transaction to a protected resource, Content-Format and Uri-Path option (Client side)
 
@@ -2110,7 +2114,7 @@ _server resources_:
 +------+----------+----------------------------------------------------------+
 
 
-#### 5.3.2. Identifier: TEST_15b {#test-15b}
+#### 5.3.2. Identifier: TEST_17b {#test-17b}
 
 **Objective** : Perform a CON GET transaction to a protected resource, Content-Format and Uri-Path option (Server side)
 
