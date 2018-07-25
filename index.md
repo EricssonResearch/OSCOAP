@@ -2,11 +2,12 @@
 
 Latest test specifications and report:
 
-* [Test specifications v4](test-spec4.html)
-* Interop 11/11/2017
+* [Test specifications v5](test-spec5.html)
 
 Others:
 
+* [Test specifications v4](test-spec4.html)
+* Interop 11/11/2017
 * [Test specifications v3](test-spec3.html)
 * [Interop 14-15/07/2017](interop4.html)
 * [Interop 08/05/2017 report](interop3.html)
