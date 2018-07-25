@@ -1890,7 +1890,7 @@ _client security context_: [Security Context A](#client-sec)
 |      |          | - (Optional) Payload                                     |
 +------+----------+----------------------------------------------------------+
 | 5    | Verify   | Client: OSCORE verification fails (expected OSCORE)      |
-|      |          | response dropped, empty ACK sent back to the             |
+|      |          | response dropped, empty ACK sent back to the Server      |
 +------+----------+----------------------------------------------------------+
 | 6    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
@@ -1926,7 +1926,7 @@ _server resources_:
 | 3    | Check    | Server parses the request; expected:                     |
 |      |          | 0.02 POST with:                                          |
 |      |          |                                                          |
-|      |          | - Object-Security option                                 |
+|      |          | - Object-Security option (unrecognized "critical" option)|
 |      |          | - Payload                                                |
 +------+----------+----------------------------------------------------------+
 | 4    | Check    | Server serialize the response correctly, which is:       |
@@ -1994,8 +1994,10 @@ _server resources_:
 |      |          |                                                          |
 |      |          | - Uri-Path : /oscore/hello/1                             |
 +------+----------+----------------------------------------------------------+
-| 2    | Check    | Server parses the request and finds an unrecognized      | 
-|      |          | option of class "critical" (the Object-Security option)  |
+| 2    | Check    | Server parses the request; expected:                     |
+|      |          | 0.01 GET with:                                           |
+|      |          |                                                          |
+|      |          | - Uri-Path : /oscore/hello/1                             |
 +------+----------+----------------------------------------------------------+
 | 3    | Verify   | Server displays the received packet                      |
 +------+----------+----------------------------------------------------------+
