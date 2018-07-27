@@ -109,7 +109,7 @@ The number used as Object-Security option number is set to 9 in this document.
 * Common Context:
     - Master Secret: 0x0102030405060708090a0b0c0d0e0f10 (16 bytes)
     - Master Salt: 0x9e7ca92223786340 (8 bytes)
-    - Common IV: 0x4622d4dd6d944168eefb54987c (13 bytes)
+    - Common IV: 0x0x2ca58fb85ff1b81c0b7181b85e (13 bytes)
     - ID Context: 0x37cbf3210017a2d3 (8 bytes)
 * Sender Context:
     - Sender ID: 0x (0 byte)
@@ -130,7 +130,7 @@ The number used as Object-Security option number is set to 9 in this document.
     - ID Context: 0x37cbf3210017a2d3 (8 bytes)
 * Sender Context:
     - Sender Id: 0x01 (1 byte)
-    - Sender Key: 0x8541014837cbf3210017a2d30a634b657910 (16 bytes)
+    - Sender Key: 0xe39a0c7c77b43f03b4b39ab9a268699f (16 bytes)
     - Sender Seq Number: 00
     - Sender IV: 0x2da58fb85ff1b81d0b7181b85e (using Partial IV: 00)
 * Recipient Context:
@@ -579,7 +579,7 @@ _client security context_: [Security Context A](#client-sec), with:
 |      |          | 2.04 Changed Response with:                              |
 |      |          |                                                          |
 |      |          | - Object-Security option                                 |
-|      |          | - Max-Age with value 0x00                                |
+|      |          | - Max-Age with value 0x00 (optional)                     |
 |      |          | - Payload                                                |
 +------+----------+----------------------------------------------------------+
 | 5    | Verify   | Client decrypts the message: OSCORE verification succeeds|
