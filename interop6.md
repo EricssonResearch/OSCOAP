@@ -48,6 +48,7 @@ The interop was recorded and can be found here: https://www.youtube.com/watch?v=
 
 #### Chat from Jitsi
 
+~~~~~~~~~~~~~~
 francesca16:58:56
 here
 Christian16:59:01
@@ -105,6 +106,7 @@ Christian18:22:36
 sorry, gotta restart my browser...
 Christian @pegasus18:26:04
 Hm, back on another device, but no sound yet...
+~~~~~~~~~~~~~~
 
 ### 1. Client: Christian, Server: Jim {#CJ}
 
