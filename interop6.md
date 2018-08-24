@@ -1,4 +1,4 @@
-# OSCOAP Interop 6 Report
+# OSCORE Interop 6 Report
 
 27th of July 2018, 17:00-19:00 CEST
 
@@ -16,7 +16,7 @@ Francesca
 
 ### \[1\]: [Test specification provided](test-spec5.html)
 
-### \[2\]: [OSCOAP version implemented](https://tools.ietf.org/html/draft-ietf-core-object-security-14)
+### \[2\]: [OSCORE version implemented](https://tools.ietf.org/html/draft-ietf-core-object-security-14)
 
 ## Summary
 
@@ -129,7 +129,7 @@ Hm, back on another device, but no sound yet...
 * 16\. non implemented
 * 17\. passed after fixed test inconsistencies from client side
 
-### 2. Client: Jim, Server: Christian {#CJ}
+### 2. Client: Jim, Server: Christian {#JC}
 
 * 0\. Passed
 * 1\. Passed
@@ -157,9 +157,9 @@ Several points were raised in the interop about the test specifications, some of
 * Test 4: Outer Max-Age set to 0 should be optional (fixed)
 * Sender Key for Context D was incorrect (fixed)
 * Common IV for Context C was incorrect (fixed)
-* Test 15: the error returned should be 4.01 Unauthorized and not 4.00 Bad Request
-* Test 9: The response should not return a payload and content format
-* Test 16: A "Method not allowed" error response is also an acceptable outcome of the test
+* Test 15: the error returned should be 4.01 Unauthorized and not 4.00 Bad Request (fixed)
+* Test 9: The response should not return a payload and content format (fixed)
+* Test 16: A "Method not allowed" error response is also an acceptable outcome of the test (fixed)
 
-Additionally, for test 2, the following comment was raised: it is not specified if a Client should expect a ID Context and/or Sender ID back. In fact, that is not part of \[2\] but is application specific. The test specification should have specified that. Moreover, it is to be considered if group OSCORE should add that in the draft itself.
+Additionally, for test 2, the following comment was raised: it is not specified if a Client should expect a ID Context and/or Sender ID back. In fact, that is not part of \[2\] but is application specific. The test specification should have specified that (fixed). Moreover, it is to be considered if group OSCORE should add that in the draft itself.
 

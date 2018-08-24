@@ -338,7 +338,8 @@ _server resources_:
 _client security context_: [Security Context C](#client-secC), with:
 
 * Sequence number received not in client's replay window
-* ID Context sent in the message
+* ID Context sent in the request
+* Sender ID sent in the request
 
 **Test Sequence**
 
@@ -388,6 +389,8 @@ _server security context_:
 [Security Context D](#server-secD), with:
 
 * Sequence number received not in server's replay window
+* ID Context not sent in the response
+* Sender ID not sent in the response
 
 _server resources_:
 
@@ -1304,10 +1307,7 @@ _client security context_: [Security Context A](#client-sec), with:
 | 5    | Verify   | Client decrypts the message: OSCORE verification succeeds|
 +------+----------+----------------------------------------------------------+
 | 6    | Check    | Client parses the decrypted response and continues the   |
-|      |          | CoAP processing; expected 2.04 Changed Response with:    |
-|      |          |                                                          |
-|      |          | - Content-Format = 0 (text/plain)                        |
-|      |          | - Payload = 0x7a                                         |
+|      |          | CoAP processing; expected 2.04 Changed Response          |
 +------+----------+----------------------------------------------------------+
 | 7    | Verify   | Client displays the received packet                      |
 +------+----------+----------------------------------------------------------+
@@ -1366,8 +1366,6 @@ _server resources_:
 |      |          | - Object-Security option                                 |
 |      |          | - Payload: ciphertext including:                         |
 |      |          |     * Code: 2.04 Changed Response                        |
-|      |          |     * Content-Format = 0 (text/plain)                    |
-|      |          |     * Payload 0x7a                                       |
 +------+----------+----------------------------------------------------------+
 | 8    | Verify   | Server displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
@@ -1909,7 +1907,7 @@ _client security context_: [Security Context A](#client-sec)
 | 11   | Verify   | Client displays the sent packet                          |
 +------+----------+----------------------------------------------------------+
 | 12   | Check    | Client parses the response; expected:                    |
-|      |          | 4.00 Bad Request, with:                                  |
+|      |          | 4.01 Unauthorized, with:                                  |
 |      |          |                                                          |
 |      |          | - Payload: Replay detected                               |
 +------+----------+----------------------------------------------------------+
@@ -1988,7 +1986,7 @@ _server resources_:
 |      |          | failed)                                                  |
 +------+----------+----------------------------------------------------------+
 | 5    | Check    | Server serialize the response correctly, which is        |
-|      |          | 4.00 Bad Request, with:                                  |
+|      |          | 4.01 Unauthorized, with:                                  |
 |      |          |                                                          |
 |      |          | - Payload: Replay protection failed (optional)           |
 +------+----------+----------------------------------------------------------+
@@ -2051,6 +2049,8 @@ _server security context_: None
 _server resources_:
 
 * /oscore/hello/coap : authorized method: GET, returns the string "Hello World!" with content-format 0 (text/plain)
+
+Note: a 4.05 Method Not Allowed error response is also an acceptable outcome of this test. To avoid entering this case, it is recommended that the /oscore/hello/coap resource also supports the method PUT.
 
 **Test Sequence**
 

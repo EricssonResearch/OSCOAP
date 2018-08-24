@@ -1,4 +1,4 @@
-# Object Security of CoAP (OSCOAP) interop: 
+# Object Security for Constrained RESTful Environments (OSCORE) interop: 
 
 Latest test specifications and report:
 
@@ -17,4 +17,4 @@ Others:
 * [Interop 27/02/2017 report](interop1.html)
 * [Test specifications v1](test-spec.html)
 
-## Please refer to the up-to-date version of OSCOAP in the CoRE wg github: [https://github.com/core-wg/oscoap](https://github.com/core-wg/oscoap)
+## Please refer to the up-to-date version of OSCORE in the CoRE wg github: [https://github.com/core-wg/oscoap](https://github.com/core-wg/oscoap)
