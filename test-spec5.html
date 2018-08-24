@@ -478,7 +478,8 @@
 <p><em>client security context</em>: <a href="#client-secC">Security Context C</a>, with:</p>
 <ul>
 <li>Sequence number received not in client's replay window</li>
-<li>ID Context sent in the message</li>
+<li>ID Context sent in the request</li>
+<li>Sender ID sent in the request</li>
 </ul>
 <p><strong>Test Sequence</strong></p>
 <table>
@@ -558,6 +559,8 @@
 <p><em>server security context</em>: <a href="#server-secD">Security Context D</a>, with:</p>
 <ul>
 <li>Sequence number received not in server's replay window</li>
+<li>ID Context not sent in the response</li>
+<li>Sender ID not sent in the response</li>
 </ul>
 <p><em>server resources</em>:</p>
 <ul>
@@ -2032,11 +2035,7 @@
 <tr class="even">
 <td><p>6</p></td>
 <td><p>Check</p></td>
-<td><p>Client parses the decrypted response and continues the CoAP processing; expected 2.04 Changed Response with:</p>
-<ul>
-<li>Content-Format = 0 (text/plain)</li>
-<li>Payload = 0x7a</li>
-</ul></td>
+<td><p>Client parses the decrypted response and continues the CoAP processing; expected 2.04 Changed Response</p></td>
 </tr>
 <tr class="odd">
 <td><p>7</p></td>
@@ -2127,8 +2126,6 @@
 <li>Payload: ciphertext including:
 <ul>
 <li>Code: 2.04 Changed Response</li>
-<li>Content-Format = 0 (text/plain)</li>
-<li>Payload 0x7a</li>
 </ul></li>
 </ul></td>
 </tr>
@@ -3010,7 +3007,7 @@
 <tr class="even">
 <td><p>12</p></td>
 <td><p>Check</p></td>
-<td><p>Client parses the response; expected: 4.00 Bad Request, with:</p>
+<td><p>Client parses the response; expected: 4.01 Unauthorized, with:</p>
 <ul>
 <li>Payload: Replay detected</li>
 </ul></td>
@@ -3141,7 +3138,7 @@
 <tr class="even">
 <td><p>5</p></td>
 <td><p>Check</p></td>
-<td><p>Server serialize the response correctly, which is 4.00 Bad Request, with:</p>
+<td><p>Server serialize the response correctly, which is 4.01 Unauthorized, with:</p>
 <ul>
 <li>Payload: Replay protection failed (optional)</li>
 </ul></td>
@@ -3229,6 +3226,7 @@
 <ul>
 <li>/oscore/hello/coap : authorized method: GET, returns the string &quot;Hello World!&quot; with content-format 0 (text/plain)</li>
 </ul>
+<p>Note: a 4.05 Method Not Allowed error response is also an acceptable outcome of this test. To avoid entering this case, it is recommended that the /oscore/hello/coap resource also supports the method PUT.</p>
 <p><strong>Test Sequence</strong></p>
 <table>
 <colgroup>
